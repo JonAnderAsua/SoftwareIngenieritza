@@ -1,5 +1,6 @@
-package Dragamina.src.packdragamina;
-import Dragamina.src.Interfazea.hasierakoMenua;
+package packdragamina;
+
+import Interfazea.hasierakoMenua;
 
 public class Partida {
 	

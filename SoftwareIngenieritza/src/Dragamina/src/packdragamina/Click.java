@@ -1,4 +1,4 @@
-package Dragamina.src.packdragamina;
+package packdragamina;
 
 import javax.swing.JLabel;
 

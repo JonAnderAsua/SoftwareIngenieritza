@@ -1,4 +1,5 @@
-package Dragamina.src.packdragamina;
+package packdragamina;
+
 import java.awt.Image;
 import java.io.IOException;
 

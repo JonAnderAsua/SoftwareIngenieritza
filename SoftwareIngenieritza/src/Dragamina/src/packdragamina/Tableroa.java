@@ -1,4 +1,4 @@
-package Dragamina.src.packdragamina;
+package packdragamina;
 
 import java.util.Random;
 
@@ -126,7 +126,7 @@ public class Tableroa {
 		return tablero;
 	}
 	
-	//Minen inguruko gehiketak egin
+	//Gelaxkako inguruko gehiketak egin
 	private char gehiketa(int i, int j, char[][] tablero){
 		char zenb = '0';
 		

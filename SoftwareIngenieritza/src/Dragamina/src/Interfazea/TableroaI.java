@@ -1,4 +1,5 @@
-package Dragamina.src.Interfazea;
+package Interfazea;
+
 import java.awt.EventQueue;
 import java.awt.GridBagConstraints;
 
@@ -13,8 +14,8 @@ import java.awt.Dimension;
 
 import javax.swing.JPanel;
 
-import Dragamina.src.packdragamina.Gelaxka;
-import  Dragamina.src.packdragamina.Tableroa;
+import packdragamina.Gelaxka;
+import packdragamina.Tableroa;
 
 import java.awt.GridBagLayout;
 import java.awt.Image;
@@ -469,7 +470,7 @@ public class TableroaI extends JDialog{
 						e.printStackTrace();
 					}
 				}
-				else if(!tablero[i][j].irekita() && tablero[i][j].banderaJarrita() && (Tableroa.getTableroa().balioa(i, j)=='M')){
+				else if(!tablero[i][j].irekita() && tablero[i][j].banderaJarrita() && !(Tableroa.getTableroa().balioa(i, j)=='M')){
 					Image img;
 					try {
 						img = ImageIO.read(getClass().getResource("mina-x.gif"));

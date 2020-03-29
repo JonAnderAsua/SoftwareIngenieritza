@@ -1,4 +1,5 @@
-package Dragamina.src.packdragamina;
+package packdragamina;
+
 import java.awt.Image;
 import java.io.IOException;
 
@@ -145,14 +146,28 @@ public class ClickEzkerra extends Click {
 	}
 	private void errekutsibokiIreki(int i, int j, Gelaxka[][] tablero){
 		if(i >= 0 && j >= 0 && i < Tableroa.getTableroa().geti() && j < Tableroa.getTableroa().getj() && !tablero[i][j].irekita()){ //Tablero barruan badago
-			tablero[i][j].ireki();
-			Tableroa.getTableroa().irekiEguneratu();
 			char zer = Tableroa.getTableroa().balioa(i, j);
 			
-			if(zer != '0'){ //Zenbakia da
-				this.zenbakiaIpini(tablero[i][j], zer);
+			if(zer == 'M' && !tablero[i][j].banderaJarrita()){ //Mina da
+				tablero[i][j].ireki();
+				Tableroa.getTableroa().irekiEguneratu();
+				
+				Image img;
+				try {
+					tablero[i][j].ireki();
+					Tableroa.getTableroa().minaIkutu();
+					img = ImageIO.read(getClass().getResource("mina-r.gif"));
+					tablero[i][j].setIcon(new ImageIcon(img));
+					
+				} catch (IOException e) {
+					System.out.println("Ezin da irudia kargatu");
+					e.printStackTrace();
+				}
 			}
 			else if(zer == '0'){
+				tablero[i][j].ireki();
+				Tableroa.getTableroa().irekiEguneratu();
+				
 				Image img;
 				try {
 					img = ImageIO.read(getClass().getResource("c0.gif"));
@@ -173,7 +188,27 @@ public class ClickEzkerra extends Click {
 				this.errekutsibokiIreki(i+1, j+1, tablero);
 				
 			}
+			else{//Zenbakia da
+				if(!tablero[i][j].banderaJarrita()){
+					tablero[i][j].ireki();
+					Tableroa.getTableroa().irekiEguneratu();
+					this.zenbakiaIpini(tablero[i][j], zer);
+				}
+			}
 		}
+	}
+	
+	public void dobleClick(int i, int j, Gelaxka[][] tablero){	
+		this.errekutsibokiIreki(i-1, j-1,tablero);
+		this.errekutsibokiIreki(i-1, j, tablero);
+		this.errekutsibokiIreki(i-1, j+1, tablero);
+		this.errekutsibokiIreki(i, j-1, tablero);
+		this.errekutsibokiIreki(i, j+1, tablero);
+		this.errekutsibokiIreki(i+1, j-1, tablero);
+		this.errekutsibokiIreki(i+1, j, tablero);
+		this.errekutsibokiIreki(i+1, j+1, tablero);
+				
+			
 	}
 	
 
