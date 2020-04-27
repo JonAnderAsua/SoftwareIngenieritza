@@ -1,9 +1,8 @@
-package packdragamina;
+package packEstructura;
 
-import Interfazea.hasierakoMenua;
+import packInterfazeak.hasierakoMenua;
 
 public class Partida {
-	
 
 	public Partida() {
 		
@@ -13,5 +12,6 @@ public class Partida {
 		hasierakoMenua partida = new hasierakoMenua();
 		partida.setVisible(true);
 	}
+
 
 }

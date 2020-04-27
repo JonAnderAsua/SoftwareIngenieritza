@@ -1,4 +1,4 @@
-package Interfazea;
+package packInterfazeak;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -7,12 +7,19 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import packEstructura.Hutsa;
+
 import javax.swing.JLabel;
+import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.event.ActionListener;
+import java.io.IOException;
 import java.awt.event.ActionEvent;
 
 public class hasierakoMenua extends JDialog {
@@ -36,6 +43,8 @@ public class hasierakoMenua extends JDialog {
 	public hasierakoMenua() {
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
+		setTitle("Dragamina");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(TableroaI.class.getResource("/packInterfazeak/unnamed.jpg")));
 		{
 			JPanel panel = new JPanel();
 			getContentPane().add(panel, BorderLayout.CENTER);
@@ -82,7 +91,15 @@ public class hasierakoMenua extends JDialog {
 			panel.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
 			{
 				JLabel label = new JLabel("");
-				label.setIcon(new ImageIcon("/home/jonander/Descargas/Untitled(1).png"));
+				Image img;
+				try {
+					img = ImageIO.read(getClass().getResource("/packInterfazeak/Dragamina.png"));
+					label.setIcon(new ImageIcon(img));
+					
+				} catch (IOException e) {
+					System.out.println("Ezin da irudia kargatu");
+					e.printStackTrace();
+				}
 				panel.add(label);
 			}
 		}

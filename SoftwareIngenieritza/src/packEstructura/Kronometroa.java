@@ -1,7 +1,4 @@
-package packdragamina;
-
-import java.util.Observable;
-
+package packEstructura;
 
 public class Kronometroa{
 	
@@ -12,8 +9,7 @@ public class Kronometroa{
 	
 	//Eraikitzailea
 	private Kronometroa() {
-		
-		
+	
 	}
 	 //Singleton patroia
 	public static synchronized Kronometroa getKronometroa(){
@@ -32,13 +28,7 @@ public class Kronometroa{
 	}
 	
 	public int pasaDirenSegunduakLortu(){
-		return (int) (System.currentTimeMillis() - zeroMomentua) / 1000;
-	}
-	
-	public void segundoBat(){
-		while(pasaDirenSegunduakLortu() == 0){
-			//Ez da segundu bat pasa
-		}
+		return ((int) (System.currentTimeMillis() - zeroMomentua) / 1000);
 	}
 
 }

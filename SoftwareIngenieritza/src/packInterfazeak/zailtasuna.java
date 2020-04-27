@@ -1,4 +1,4 @@
-package Interfazea;
+package packInterfazeak;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -7,11 +7,16 @@ import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import packEstructura.Tableroa;
+
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
 import java.awt.GridBagConstraints;
 import javax.swing.JTextField;
 import java.awt.Insets;
+import java.awt.Toolkit;
+
 import javax.swing.JSlider;
 import javax.swing.SwingConstants;
 import java.awt.event.ActionListener;
@@ -45,6 +50,8 @@ public class zailtasuna extends JDialog {
 	public zailtasuna() {
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
+		setTitle("Dragamina. Zailtasuna aukeratu");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(TableroaI.class.getResource("/packInterfazeak/unnamed.jpg")));
 		{
 			JPanel panel = new JPanel();
 			getContentPane().add(panel, BorderLayout.CENTER);
@@ -139,16 +146,19 @@ public class zailtasuna extends JDialog {
 				TableroaI tableroI = new TableroaI(7,10);
 				setVisible(false);
 				tableroI.setVisible(true);
+				
 			}
 			else if(getSlider().getValue()==2){//10x15
 				TableroaI tableroI = new TableroaI(10,15);
 				setVisible(false);
 				tableroI.setVisible(true);
+				
 			}
 			else{//12x25
 				TableroaI tableroI = new TableroaI(12,25);
 				setVisible(false);
 				tableroI.setVisible(true);
+				
 			}
 		}
 	}
