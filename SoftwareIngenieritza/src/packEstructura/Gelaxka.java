@@ -1,4 +1,4 @@
-package packEstructura;
+package packEstructura; 
 
 public abstract class Gelaxka {
 	protected Egoera egoera;
