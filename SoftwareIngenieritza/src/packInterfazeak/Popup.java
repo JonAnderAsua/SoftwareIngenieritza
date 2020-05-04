@@ -8,12 +8,13 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import packEstructura.Tableroa;
+import packEstruktura.Tableroa;
 
 import javax.swing.JLabel;
 import java.awt.GridBagLayout;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -23,12 +24,13 @@ public class Popup extends JDialog {
 	private int puntuazioa;
 	private int i;
 	private int j;
+	private TableroaI tableroI;
 	/**
 	 * Launch the application.
 	 */
 	public static void main(String[] args) {
 		try {
-			Popup dialog = new Popup(1,0,7,10);
+			Popup dialog = new Popup(1,0,7,10,new TableroaI(7,10));
 			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			dialog.setVisible(true);
 		} catch (Exception e) {
@@ -39,15 +41,18 @@ public class Popup extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public Popup(int z, int p, int pI, int pJ) {
+	public Popup(int z, int p, int pI, int pJ, TableroaI tableroI) {
 		
 		this.zailtasuna = z;
 		this.puntuazioa = p;
 		this.i = pI;
 		this.j = pJ;
+		this.tableroI = tableroI;
 		
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
+		setTitle("Dragamina");
+		setIconImage(Toolkit.getDefaultToolkit().getImage(TableroaI.class.getResource("/packInterfazeak/unnamed.jpg")));
 		{
 			JPanel panel = new JPanel();
 			getContentPane().add(panel, BorderLayout.CENTER);
@@ -67,7 +72,11 @@ public class Popup extends JDialog {
 				JButton btnBestePartidaBat = new JButton("Beste partida bat jokatu");
 				btnBestePartidaBat.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
+						Tableroa.getTableroa().hasieratu();
+						Tableroa.getTableroa().deleteObservers();
 						TableroaI t = new TableroaI(i,j);
+						Tableroa.getTableroa().addObserver(t);
+						tableroI.setVisible(false);
 						t.setVisible(true);
 						setVisible(false);
 					}
@@ -84,6 +93,9 @@ public class Popup extends JDialog {
 				btnPuntuazioakIkusi.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						Puntuazioak p = new Puntuazioak();
+						Tableroa.getTableroa().hasieratu();
+						Tableroa.getTableroa().deleteObservers();
+						tableroI.setVisible(false);
 						p.setVisible(true);
 						setVisible(false);
 					}
@@ -100,6 +112,9 @@ public class Popup extends JDialog {
 				btnBukatu.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent arg0) {
 						hasierakoMenua hm = new hasierakoMenua();
+						Tableroa.getTableroa().deleteObservers();
+						Tableroa.getTableroa().hasieratu();
+						tableroI.setVisible(false);
 						setVisible(false);
 						hm.setVisible(true);
 					}
@@ -122,3 +137,4 @@ public class Popup extends JDialog {
 	}
 
 }
+

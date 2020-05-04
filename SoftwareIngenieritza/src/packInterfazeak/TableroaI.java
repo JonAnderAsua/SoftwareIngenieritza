@@ -27,14 +27,16 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
-import packEstructura.Bandera;
-import packEstructura.Hutsa;
-import packEstructura.Irekita;
-import packEstructura.Itxita;
-import packEstructura.Kronometroa;
-import packEstructura.Mina;
-import packEstructura.Tableroa;
-import packEstructura.Zenbakia;
+import packEstruktura.Bandera;
+import packEstruktura.Galdera;
+import packEstruktura.Hutsa;
+import packEstruktura.Irekita;
+import packEstruktura.Itxita;
+import packEstruktura.JokalariKatalogo;
+import packEstruktura.Kronometroa;
+import packEstruktura.Mina;
+import packEstruktura.Tableroa;
+import packEstruktura.Zenbakia;
 
 
 public class TableroaI extends JDialog implements Observer{
@@ -86,16 +88,16 @@ public class TableroaI extends JDialog implements Observer{
 		ler=nLerro;
 		zut=nZutabe;
 		if(nLerro==7){
-			setSize(206,294);
+			this.setMinimumSize(new Dimension(206, 295));
             zailtasuna=1;
         }
         else if(nLerro==10){
-        	setSize(406,495);  
+        	this.setMinimumSize(new Dimension(406, 350));
             zailtasuna=2;
         }
         else{
-        	setSize(606,695);
             zailtasuna=3;
+            this.setMinimumSize(new Dimension(606, 400));
         }
 		initialize(nLerro,nZutabe);
 		Tableroa.getTableroa().addObserver(this);
@@ -200,6 +202,9 @@ public class TableroaI extends JDialog implements Observer{
 				else if(((Hutsa) arg1).getEgoera() instanceof Itxita){
 					this.itxi(((Hutsa) arg1).geti(), ((Hutsa) arg1).getj());
 				}
+				else if(((Hutsa) arg1).getEgoera() instanceof Galdera){
+					this.galderaIpini(((Hutsa) arg1).geti(), ((Hutsa) arg1).getj());
+				}
 			}
 			else{//Partida galdu da
 				if(((Hutsa) arg1).getEgoera() instanceof Bandera){
@@ -228,6 +233,9 @@ public class TableroaI extends JDialog implements Observer{
 				}
 				else if(((Zenbakia) arg1).getEgoera() instanceof Itxita){
 					this.itxi(((Zenbakia) arg1).geti(), ((Zenbakia) arg1).getj());
+				}
+				else if(((Zenbakia) arg1).getEgoera() instanceof Galdera){
+					this.galderaIpini(((Zenbakia) arg1).geti(), ((Zenbakia) arg1).getj());
 				}
 			}
 			else{//Partida galdu da
@@ -266,9 +274,12 @@ public class TableroaI extends JDialog implements Observer{
 				else if(((Mina) arg1).getEgoera() instanceof Itxita){
 					this.itxi(((Mina) arg1).geti(), ((Mina) arg1).getj());
 				}
+				else if(((Mina) arg1).getEgoera() instanceof Galdera){
+					this.galderaIpini(((Mina) arg1).geti(), ((Mina) arg1).getj());
+				}
 			}
 			else{//Partida galdu da
-				if(((Mina) arg1).getEgoera() instanceof Itxita){
+				if(((Mina) arg1).getEgoera() instanceof Itxita || ((Mina) arg1).getEgoera() instanceof Galdera){
 					Image img;
 					try {
 						img = ImageIO.read(getClass().getResource("mina-n.gif"));
@@ -294,6 +305,20 @@ public class TableroaI extends JDialog implements Observer{
 				this.partidaGaldu();
 				this.denboraJarri();
 				break;
+			case "PopupI":
+				int denbora = Kronometroa.getKronometroa().pasaDirenSegunduakLortu();
+				int jokPunt = JokalariKatalogo.getJokalariKatalogo().puntuazioaKalkulatu(denbora,zailtasuna);
+				Popup pop = new Popup(zailtasuna,jokPunt,ler,zut,this);
+				System.out.println("Irabazi");
+				pop.setLocation(600, 100);
+				pop.setVisible(true);
+				break;
+			case "PopupG":
+				Popup pop1 = new Popup(zailtasuna,0,ler,zut,this);
+				System.out.println("Galdu");
+				pop1.setLocation(600, 100);
+				pop1.setVisible(true);
+				break;
 			}
 		}
 		else{ //Mina kontagailua eguneratu behar da
@@ -317,6 +342,18 @@ public class TableroaI extends JDialog implements Observer{
 		Image img;
 		try {
 			img = ImageIO.read(getClass().getResource("tablero.gif"));
+			tablero[i][j].setIcon(new ImageIcon(img));
+			
+		} catch (IOException e) {
+			System.out.println("Ezin da irudia kargatu");
+			e.printStackTrace();
+		}
+	}
+	
+	private void galderaIpini(int i, int j){
+		Image img;
+		try {
+			img = ImageIO.read(getClass().getResource("marca.gif"));
 			tablero[i][j].setIcon(new ImageIcon(img));
 			
 		} catch (IOException e) {
@@ -564,7 +601,6 @@ public class TableroaI extends JDialog implements Observer{
 			System.out.println("Ezin da irudia kargatu");
 			e.printStackTrace();
 		}
-		
 	}
 	
 	private void partidaGaldu(){
@@ -703,18 +739,20 @@ public class TableroaI extends JDialog implements Observer{
 				System.out.println("Ezin da irudia kargatu");
 				e.printStackTrace();
 			}
+			lblCarita.addMouseListener(new MouseAdapter() {
+	            public void mouseClicked(MouseEvent e) {
+	            		if ((e.getModifiers() & InputEvent.BUTTON1_MASK) != 0) {
+	            			Tableroa.getTableroa().deleteObservers();
+	                    	TableroaI tableroI = new TableroaI(ler,zut);
+	                    	Tableroa.getTableroa().hasieratu();
+	                    	setVisible(false);
+	                    	tableroI.setVisible(true);
+	                	} 	  	
+	            }
+	        });
+	            
 		}
 		
-		addMouseListener(new MouseAdapter() {
-			public void mouseClicked(MouseEvent e) {
-				Tableroa.getTableroa().deleteObservers();
-            	TableroaI tableroI = new TableroaI(ler,zut);
-            	Tableroa.getTableroa().addObserver(tableroI);
-            	Tableroa.getTableroa().hasieratu();
-            	setVisible(false);
-            	tableroI.setVisible(true);
-			 }
-		});
 		
 		return lblCarita;
 	}
@@ -782,7 +820,7 @@ public class TableroaI extends JDialog implements Observer{
 	}
 	private JMenu getMnAtzera() {
 		if (mnAtzera == null) {
-			mnAtzera = new JMenu("Laguntza");
+			mnAtzera = new JMenu("Erreseteatu");
 			mnAtzera.add(getMntmPartidaBerria());
 		}
 		return mnAtzera;

@@ -8,7 +8,7 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import packEstructura.Tableroa;
+import packEstruktura.Tableroa;
 
 import java.awt.GridBagLayout;
 import javax.swing.JLabel;
@@ -142,6 +142,12 @@ public class zailtasuna extends JDialog {
 	}
 	private class BtnHasiActionListener implements ActionListener {
 		public void actionPerformed(ActionEvent arg0) {
+			String izena = textField.getText();
+			if(izena.equals("")){
+				izena = "Erabiltzaile001";
+			}
+			
+			//TableroI sortu
 			if(getSlider().getValue()==1){ //7x10
 				TableroaI tableroI = new TableroaI(7,10);
 				setVisible(false);
@@ -160,7 +166,10 @@ public class zailtasuna extends JDialog {
 				tableroI.setVisible(true);
 				
 			}
+			
+			Tableroa.getTableroa().setIzena(izena);
 		}
 	}
+	
 }
 

@@ -1,4 +1,4 @@
-package packEstructura;
+package packEstruktura;
 
 public class GelaxkaFactory {
 	

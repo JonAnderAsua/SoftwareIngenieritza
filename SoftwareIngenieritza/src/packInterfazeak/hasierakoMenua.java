@@ -8,7 +8,8 @@ import javax.swing.JDialog;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
-import packEstructura.Hutsa;
+import packEstruktura.Hutsa;
+import packEstruktura.JokalariKatalogo;
 
 import javax.swing.JLabel;
 import javax.imageio.ImageIO;
@@ -45,6 +46,8 @@ public class hasierakoMenua extends JDialog {
 		getContentPane().setLayout(new BorderLayout());
 		setTitle("Dragamina");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(TableroaI.class.getResource("/packInterfazeak/unnamed.jpg")));
+		//JokalariKatalogo.getJokalariKatalogo().datuakKargatu();
+		
 		{
 			JPanel panel = new JPanel();
 			getContentPane().add(panel, BorderLayout.CENTER);
@@ -78,6 +81,7 @@ public class hasierakoMenua extends JDialog {
 			}
 			{
 				JButton btnPuntuazioakIkusi = new JButton("Puntuazioak ikusi");
+				btnPuntuazioakIkusi.addActionListener(new BtnPuntuazioakIkusiActionListener());
 				GridBagConstraints gbc_btnPuntuazioakIkusi = new GridBagConstraints();
 				gbc_btnPuntuazioakIkusi.insets = new Insets(0, 0, 0, 5);
 				gbc_btnPuntuazioakIkusi.gridx = 4;
@@ -103,6 +107,16 @@ public class hasierakoMenua extends JDialog {
 				panel.add(label);
 			}
 		}
+		
+		
 	}
 
+	private class BtnPuntuazioakIkusiActionListener implements ActionListener {
+		public void actionPerformed(ActionEvent arg0) {
+			Puntuazioak p = new Puntuazioak();
+			p.setVisible(true);
+			setVisible(false);
+			
+		}
+	}
 }

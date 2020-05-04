@@ -1,10 +1,10 @@
-package packEstructura;
+package packEstruktura;
 
 import java.util.Observable;
 import java.util.Random;
 
-//import packInterfazeak.Puntuazioak;
 import packInterfazeak.Popup;
+import packInterfazeak.Puntuazioak;
 
 public class Tableroa extends Observable {
 
@@ -220,8 +220,14 @@ public class Tableroa extends Observable {
 		else if(i == -2){ //Partida irabazi da
 			this.notifyObservers("Irabazi");
 		}
-		else if(i == -3){
+		else if(i == -3){ //Partida galdu da
 			this.notifyObservers("Galdu");
+		}
+		else if(i == -4){
+			this.notifyObservers("PopupI");
+		}
+		else if(i == -5){
+			this.notifyObservers("PopupG");
 		}
 		this.clearChanged();
 	}
@@ -243,6 +249,9 @@ public class Tableroa extends Observable {
 					this.minaGehitu();
 					this.aldaketa(-1, -1);
 				}
+				else if(g.egoera instanceof Galdera){
+					this.gelaxkaTablero[i][j].eskuinekoClick();
+				}
 				//Irekita badago ez da ezer egin behar
 				
 				this.aldaketa(i, j);
@@ -262,7 +271,7 @@ public class Tableroa extends Observable {
 			
 			Gelaxka g = this.gelaxkaTablero[i][j];
 			
-			if(g.egoera instanceof Itxita){
+			if(g.egoera instanceof Itxita || g.egoera instanceof Galdera){
 				this.gelaxkaTablero[i][j].ezkerrekoClick();
 				if(g instanceof Mina){
 					this.aldaketa(i, j);
@@ -293,16 +302,15 @@ public class Tableroa extends Observable {
 			if(this.partidaIrabazi()){
 				this.aldaketa(-2, -2);
 				int denbora = Kronometroa.getKronometroa().pasaDirenSegunduakLortu();
-				//int jokPunt = JokalariKatalogo.getJokalariKatalogo().puntuazioaKalkulatu(denbora,zailtasunaKalkulatu());
-				//JokalariKatalogo.getJokalariKatalogo().jokalarariaSartu(izena, Kronometroa.getKronometroa().pasaDirenSegunduakLortu(), this.zailtasunaKalkulatu());
-			//	Popup pop = new Popup(zailtasunaKalkulatu(),jokPunt,i,j);
-				//pop.setVisible(true);
+				int jokPunt = JokalariKatalogo.getJokalariKatalogo().puntuazioaKalkulatu(denbora,zailtasunaKalkulatu());
+				JokalariKatalogo.getJokalariKatalogo().jokalarariaSartu(izena, denbora, this.zailtasunaKalkulatu());
+				this.aldaketa(-4, -4);
+				
 			}
 			if(this.galdu){
 				this.aldaketa(-3,-3);
 				this.tableroGaldu();
-				Popup pop = new Popup(zailtasunaKalkulatu(),0,i,j);
-				pop.setVisible(true);
+				this.aldaketa(-5, -5);
 				
 			}
 		}
@@ -352,7 +360,7 @@ public class Tableroa extends Observable {
 			if(g instanceof Mina){
 				this.ezkerrekoClick(this.i, this.j, i, j);
 			}
-			if(g.egoera instanceof Itxita){
+			if(g.egoera instanceof Itxita || g.egoera instanceof Galdera){
 				g.egoeraAldatu("ezkerra");
 				this.irekiEguneratu();
 				this.aldaketa(i, j);
@@ -383,6 +391,7 @@ public class Tableroa extends Observable {
 		
 		return false;
 	}
+	
 	
 	private int gehiketa(int i, int j){
 		int zenb = 0;
@@ -443,6 +452,11 @@ public class Tableroa extends Observable {
 					//Mina x-rekin
 					this.aldaketa(i, j);
 				}
+				if((gelaxkaTablero[i][j].egoera instanceof Galdera) && (gelaxkaTablero[i][j] instanceof Mina)){
+					//Mina erakutsi
+					this.aldaketa(i, j);
+				}
+				
 			}
 			
 		}

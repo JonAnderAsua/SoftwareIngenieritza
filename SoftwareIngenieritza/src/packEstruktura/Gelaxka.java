@@ -1,4 +1,4 @@
-package packEstructura; 
+package packEstruktura;
 
 public abstract class Gelaxka {
 	protected Egoera egoera;
@@ -30,13 +30,16 @@ public abstract class Gelaxka {
 				this.egoera = new Bandera();
 			}
 			else if(this.egoera instanceof Bandera){
+				this.egoera = new Galdera();
+			}
+			else if(this.egoera instanceof Galdera){
 				this.egoera = new Itxita();
 			}
 			//Irekita badago ez da ezer egin behar
 			
 			break;
 		case "ezkerra":
-			if(this.egoera instanceof Itxita){
+			if(this.egoera instanceof Itxita || this.egoera instanceof Galdera){
 				this.egoera = new Irekita();
 			}
 			//Irekita badago edo bandera badauka ez da ezer egin behar
