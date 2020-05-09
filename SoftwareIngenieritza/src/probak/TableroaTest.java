@@ -2278,7 +2278,7 @@ public class TableroaTest {
 		//#################################
 		//Izen bat sartu da
 		Tableroa.getTableroa().setIzena("Josu");
-		assertEquals("Josu", Tableroa.getTableroa().getIzena());
+		assertEquals("Josu", Tableroa.getTableroa().getIzena()); 
 			
 		//#################################
 		//Aurreko izena aldatu da
