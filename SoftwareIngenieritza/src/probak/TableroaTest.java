@@ -2273,7 +2273,7 @@ public class TableroaTest {
 		//Izenik ez da sartu
 		Tableroa.getTableroa().hasieratu();
 		Tableroa.getTableroa().tableroaSortu(10, 7, 1, 1);
-		assertEquals(null, Tableroa.getTableroa().getIzena());
+		assertNull(Tableroa.getTableroa().getIzena());
 				
 		//#################################
 		//Izen bat sartu da
