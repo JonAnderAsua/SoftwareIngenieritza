@@ -9,10 +9,14 @@ public class Jokalaria {
 		this.puntuazioa=puntuazioa;
 	}
 	
+	
+	//Jokalariaren puntuazioa lortu
 	public int getPuntuazioa(){
 		return puntuazioa;
 	}
 	
+	
+	//Jokalariaren izena lortu
 	public String getIzena(){
 		return izena;
 	}

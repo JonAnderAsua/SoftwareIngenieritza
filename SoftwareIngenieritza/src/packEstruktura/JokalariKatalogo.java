@@ -2,12 +2,7 @@ package packEstruktura;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -24,6 +19,7 @@ public class JokalariKatalogo {
 	}
 	
 	
+	//Singleton Patroia
 	public static synchronized JokalariKatalogo getJokalariKatalogo(){
 		if(nJokalariKatalogo == null){
 			nJokalariKatalogo = new JokalariKatalogo();
@@ -32,11 +28,10 @@ public class JokalariKatalogo {
 	}
 	
 	
-	
+	//Datuak fitxategitik irakurri eta jokalarien lista kargatzea
 	public void datuakKargatu(){
 		this.listaHustu(); //Bestela behin eta berriz kargatzen dira datuak
 		String izena = "./Puntuazioak.txt";
-		
 		
 		try(Scanner sc = new Scanner(new File(izena))){
 			sc.useDelimiter(";"); // Hau erabilita, Scanner erabili daiteke datuak zatitzeko
@@ -55,13 +50,15 @@ public class JokalariKatalogo {
 	}
 	
 	
-	//Puntuazioa kalkulatu
+	//Puntuazioa kalkulatu: (denbora maxioma - egindako denbora) * partidaren zailtasuna
 	public int puntuazioaKalkulatu(int denbora, int zailtasuna){
 		return (999-denbora)*zailtasuna;
 
 	}
 	
 	
+	//Partida irabazi duen jokalari bat, bere puntuazioaren arabera, listan sar daitekeen erabaki.
+	//Sartu ahal bada, dagokion tokian sartuko da (puntuazoak altuenetik baxuenera ordenatuta daude, gehienez 10 elementu egongo dira)
 	public void jokalarariaSartu(String izena, int denbora, int zailtasuna){
 		int i = lista.size()-1;
 		boolean aurkitua = false;
@@ -72,10 +69,10 @@ public class JokalariKatalogo {
 		if(i == -1){ //Lista hutsik dago
 			this.lista.add(j);
 		}
-		else{
-			while(i>=0 && !aurkitua){ //Gutzienez elementu bat dago listan
+		else{ //Gutxienez elementu bat dago listan
+			while(i>=0 && !aurkitua){ //Lista atzetik aurrera errekorritzen da
 				Jokalaria jok = this.lista.get(i);
-				if(jok.getPuntuazioa()>j.getPuntuazioa()){
+				if(jok.getPuntuazioa()>j.getPuntuazioa()){ //Listakoak puntuazio altuagoa badauka tokia aurkitu da
 					aurkitua = true;
 				}
 				else{
@@ -85,31 +82,36 @@ public class JokalariKatalogo {
 			
 			if(aurkitua){ //Posizioa aukitu dugu
 				this.lista.add(i+1,j);
-				if(lista.size()>10){
+				if(lista.size()>10){ //Jada 10 elementu badaude
 					this.lista.remove(lista.size()-1);
 				}
 			}
-			else if(i==-1 && !aurkitua){ //Lehenengo posizioa
+			else if(i==-1 && !aurkitua){ //Lehenengo posizioan sartu behar da
 				this.lista.add(0,j);
-				if(lista.size()>10){
+				if(lista.size()>10){ //Jada 10 elementu badaude
 					this.lista.remove(lista.size()-1);
 				}
 			}
 		}
 		
+		//Fitxategiko datuak eguneratu
 		this.datuakIdatzi();
 	}
 	
 	
+	//Jokalari lista lortu
 	public Iterator<Jokalaria> jokalariakLortu(){
 		return this.lista.iterator();
 	}
 	
-	private void listaHustu(){
+	
+	//Lista hustea (batez ere jUnit-etan erabilia)
+	public void listaHustu(){
 		this.lista.clear();
 	}
 
 	
+	//Datuak fitxategian idaztea
 	private void datuakIdatzi(){
 		String izena = "Puntuazioak.txt";
 		
@@ -125,6 +127,5 @@ public class JokalariKatalogo {
 		catch (FileNotFoundException e) {
 			System.out.println("Fitxategia ez da aurkitu"); 
 		}
-		
 	}
 }

@@ -6,11 +6,14 @@ public class Mina extends Gelaxka {
 		super(i,j);
 	}
 	
+	//Eskuineko klika egitean egoera aldatzea 
 	public void eskuinekoClick(){
 		this.egoeraAldatu("eskuina");
 		
 	}
 	
+	
+	//Ezkerreko klika egitean egoera aldatzea 
 	public void ezkerrekoClick(){
 		this.egoeraAldatu("ezkerra");
 		

@@ -3,8 +3,6 @@ package packEstruktura;
 import java.util.Observable;
 import java.util.Random;
 
-import packInterfazeak.Popup;
-import packInterfazeak.Puntuazioak;
 
 public class Tableroa extends Observable {
 
@@ -23,6 +21,7 @@ public class Tableroa extends Observable {
 		super();
 	}
 	
+	//Singleton Patroia
 	public static synchronized Tableroa getTableroa(){
 		if(nTableroa == null){
 			nTableroa = new Tableroa();
@@ -30,11 +29,14 @@ public class Tableroa extends Observable {
 		return nTableroa;
 	}
 	
+	
+	//Partida berri bat hasi bada zenbait balio hasieratu
 	public void hasieratu(){
 		this.irekiKop=-1;
         this.galdu = false;
         this.lehenengoa=true;
 	}
+	
 	
 	//7x10 //10x15 //12x25
 	public void tableroaSortu(Integer zutabe, Integer errenkada, Integer x, Integer y) {
@@ -58,10 +60,13 @@ public class Tableroa extends Observable {
         tablero = this.zenbakiakJarri(tablero);
         this.printTablero(tablero);
 
+        //Gelaxken tableroa sortu
         this.gelaxkaTableroa(tablero);
         this.irekiKop=0;
+        //Denbora martxan jarri
         Kronometroa.getKronometroa().zeroanJarri();
     }
+	
 	
 	//Gelaxken tableroa sortu
 	private void gelaxkaTableroa(char[][] ptablero){
@@ -85,7 +90,8 @@ public class Tableroa extends Observable {
 		}
 	}
 	
-	//Minak jarri
+	
+	//Tableroan Minak jarri
 	private char[][] minakJarri(char[][] tablero, Integer iKlik, Integer jKlik){
 		//Mina kopurua kalkulatu
 		int mina = 0;
@@ -147,6 +153,7 @@ public class Tableroa extends Observable {
 		return tablero;
 	}
 	
+	
 	//Laukien zenbakiak jarri
 	private char[][] zenbakiakJarri(char[][] tablero){
 		for(int i=0;i<tablero.length;i++) {
@@ -158,6 +165,7 @@ public class Tableroa extends Observable {
         }
 		return tablero;
 	}
+	
 	
 	//Gelaxkako inguruko gehiketak egin
 	private char gehiketa(int i, int j, char[][] tablero){
@@ -199,6 +207,7 @@ public class Tableroa extends Observable {
 		return zenb;
 	}
 	
+	
 	//Konprobatu tablerotik ez dela irtetzen
 	private char konprobatu(int i, int j, char[][] tablero) {
         if(i>=0&&j>=0&&i<=tablero.length-1&&j<=tablero[1].length-1) {
@@ -207,8 +216,9 @@ public class Tableroa extends Observable {
         return 'e';
     }
 	
-	//Aldaketa adierazi
-	public void aldaketa(int i, int j){
+	
+	//Aldaketa TableroaI Interfazean adierazi
+	private void aldaketa(int i, int j){
 		this.setChanged();
 		//Tableroa eguneratu
 		if(i >= 0){
@@ -223,28 +233,28 @@ public class Tableroa extends Observable {
 		else if(i == -3){ //Partida galdu da
 			this.notifyObservers("Galdu");
 		}
-		else if(i == -4){
+		else if(i == -4){ //Popup atera (irabaztean)
 			this.notifyObservers("PopupI");
 		}
-		else if(i == -5){
+		else if(i == -5){ //Popup atera (galtzean)
 			this.notifyObservers("PopupG");
 		}
 		this.clearChanged();
 	}
 	
+	
 	//Eskuineko click-a
 	public void eskuinekoClick(int i, int j){
 		if(!this.galdu && !this.partidaIrabazi()){ //Mina ikutu ez badugu eta irabazi ez badugu
-			//System.out.println("Eskuineko click");
 			if(!lehenengoa){//Tableroa jada sortu da
 				
 				Gelaxka g = this.gelaxkaTablero[i][j];
-				if(g.egoera instanceof Itxita && this.minak>0){
+				if(g.egoera instanceof Itxita && this.minak>0){ //Aurkitu gabeko minak badaude
 					this.gelaxkaTablero[i][j].eskuinekoClick();
 					this.minaKendu();
 					this.aldaketa(-1, -1);
 				}
-				else if(g.egoera instanceof Bandera && this.minak < this.minaTotalak){
+				else if(g.egoera instanceof Bandera && this.minak < this.minaTotalak){ //Kendu gabeko banderak badaude
 					this.gelaxkaTablero[i][j].eskuinekoClick();
 					this.minaGehitu();
 					this.aldaketa(-1, -1);
@@ -260,10 +270,10 @@ public class Tableroa extends Observable {
 		
 	}
 	
+	
 	//Ezkerreko click-a
 	public void ezkerrekoClick(int zutabe, int errenkada, int i, int j){
 		if(!this.galdu && !this.partidaIrabazi()){//Mina ikutu ez badugu eta irabazi ez badugu
-			//System.out.println("Ezkerreko click");
 			if(lehenengoa){ //Lehenengo click-a bada, tableroa sortu
 				this.lehenengoa=false;
 				this.tableroaSortu(zutabe, errenkada, j, i);
@@ -289,24 +299,20 @@ public class Tableroa extends Observable {
 			
 			else if(g instanceof Zenbakia && g.egoera instanceof Irekita){ //Zenbakia bada eta irekita badago
 				this.dobleclick(i, j);
-				//Doble click egin
+				//Click bikoitza egin
 			}
-			/*
-			if(g instanceof Hutsa && g.egoera instanceof Itxita){ //Hutsa bada eta itxita badago
-				this.errekurtsibokiIreki(i, j);
-				//Errekurtsiboki ireki
-			}
-			*/
 			this.aldaketa(i, j);
 			
+			//Partida irabazi den begiratu, eta hala bada beharrezkoa egin
 			if(this.partidaIrabazi()){
 				this.aldaketa(-2, -2);
 				int denbora = Kronometroa.getKronometroa().pasaDirenSegunduakLortu();
-				int jokPunt = JokalariKatalogo.getJokalariKatalogo().puntuazioaKalkulatu(denbora,zailtasunaKalkulatu());
 				JokalariKatalogo.getJokalariKatalogo().jokalarariaSartu(izena, denbora, this.zailtasunaKalkulatu());
 				this.aldaketa(-4, -4);
 				
 			}
+			
+			//Partida galdu den begiratu, eta hala bada beharrezkoa egin
 			if(this.galdu){
 				this.aldaketa(-3,-3);
 				this.tableroGaldu();
@@ -317,10 +323,11 @@ public class Tableroa extends Observable {
 	}
 	
 	
+	//Gelaxka hutsa denean, zenbakidun gelaxka bat topatu arte inguruko guztiak ireki
 	private void errekurtsibokiIreki(int i, int j){
 		if(i >= 0 && j >= 0 && i < this.i && j < this.j){//Tablero barruan badago
 			Gelaxka g = Tableroa.getTableroa().balioa(i, j);
-			if(g.egoera instanceof Itxita){
+			if((g.egoera instanceof Itxita) || (g.egoera instanceof Galdera)){
 				g.egoeraAldatu("ezkerra");
 				this.irekiEguneratu();
 				Tableroa.getTableroa().aldaketa(i, j);
@@ -340,9 +347,10 @@ public class Tableroa extends Observable {
 		}
 	}
 	
+	
+	//Klik bikoitza egin bada, ingurukoak errekurtsiboki ireki
 	private void dobleclick(int i, int j){
 		if(this.banderaKopurua(i, j)){
-			//System.out.println("CUCU");
 			this.ireki(i-1, j-1);
 			this.ireki(i-1, j);
 			this.ireki(i-1, j+1);
@@ -354,6 +362,8 @@ public class Tableroa extends Observable {
 		}
 	}
 	
+	
+	//Klik bikoitza egin bada, ingurukoak errekurtsiboki ireki
 	private void ireki(int i, int j){
 		if(i >= 0 && j >= 0 && i < this.i && j < this.j){//Tablero barruan badago
 			Gelaxka g = this.gelaxkaTablero[i][j];
@@ -376,12 +386,12 @@ public class Tableroa extends Observable {
 					this.ireki(i+1, j);
 					this.ireki(i+1, j+1);
 				}
-				
 			}
 		}
 	}
 
 	
+	//Gelaxkaren inguruan jarrita dauden bandera kopurua inguruko mina kopuruaren berdina den begiratu
 	private boolean banderaKopurua(int i, int j){
 		int kont = this.gehiketa(i, j);
 		Gelaxka g = Tableroa.getTableroa().balioa(i, j);
@@ -393,6 +403,7 @@ public class Tableroa extends Observable {
 	}
 	
 	
+	//Gelaxkaren inguruan jarrita dauden bandera kopurua kalkulatu
 	private int gehiketa(int i, int j){
 		int zenb = 0;
 		
@@ -433,6 +444,8 @@ public class Tableroa extends Observable {
 		return zenb;
 	}
 	
+	
+	//Gelaxka tablero barruan dagoela konprobatzen du
 	private Gelaxka konprobatu(int i, int j) {
 	     if(i>=0&&j>=0&&i<=Tableroa.getTableroa().geti()-1&&j<=Tableroa.getTableroa().getj()-1) {
 	          return Tableroa.getTableroa().balioa(i, j);
@@ -441,6 +454,7 @@ public class Tableroa extends Observable {
 	 }
 	
 	
+	//Partida galdu bada, tableroa errekorritu minak erakusteko
 	private void tableroGaldu(){
 		for(int i=0; i < gelaxkaTablero.length; i++){
 			for(int j=0; j < gelaxkaTablero[0].length; j++){
@@ -456,13 +470,12 @@ public class Tableroa extends Observable {
 					//Mina erakutsi
 					this.aldaketa(i, j);
 				}
-				
 			}
-			
 		}
 	}
 	
 	
+	//Tableroa pantailan printeatu, gida izateko
 	private void printTablero(char[][] tablero) {
         String lerroa;
         String banatu =" ";
@@ -480,52 +493,73 @@ public class Tableroa extends Observable {
         }
     }
 	
+	
+	//Aurkitutako minen kontagailua itzuli
 	public int getMinak(){
 		return this.minak;
 	}
 	
-	public void minaGehitu(){
+	
+	//Mina aurkituen kontagailuan mina bat gehitu
+	private void minaGehitu(){
 		if(this.minak < this.minaTotalak){
 			this.minak++;
 		}
 	}
 	
-	public void minaKendu(){
+	
+	//Mina aurkituen kontagailuan mina bat kendu
+	private void minaKendu(){
 		if(this.minak > 0){
 			this.minak--;
 		}
 	}
 	
+	
+	//Zehaztutako posizioko gelaxka itzultzen du
 	public Gelaxka balioa(int i, int j){
 		return this.gelaxkaTablero[i][j];
 	}
 	
+	
+	//Tableroko i eremuaren balioa itzultzen du
 	public int geti(){
 		return this.i;
 	}
 	
+	
+	//Tableroko j eremuaren balioa itzultzen du
 	public int getj(){
 		return this.j;
 	}
 	
-	public void irekiEguneratu(){
+	
+	//Gelaxka irekien kontagailuan gehi bat egin
+	private void irekiEguneratu(){
 		this.irekiKop++;
 	}
 	
-	public void minaIkutu(){
+	
+	//Mina bat ikutu denez, partida galdu dela adierazi
+	private void minaIkutu(){
 		this.galdu = true;
 	}
 	
+	
+	//Partida galdu den itzultzen du
 	public boolean partidaGaldu(){
 		return this.galdu;
 	}
 	
+	
+	//Patida irabazi den kalkulatzen du
 	public boolean partidaIrabazi(){
 		//Itxita gelditzen direnak mina kopuruaren berdina
-		//System.out.println(this.irekiKop);
 		return (this.minaTotalak == ((this.i*this.j)-this.irekiKop));
 	}
 	
+	
+	//Jokatzen ari den partidaren zailtasuna kalkulatzen du
 	private int zailtasunaKalkulatu(){
 		int z = 0;
 		
@@ -544,12 +578,19 @@ public class Tableroa extends Observable {
 		return z;
 	}
 	
+	
+	//Partida jokatzen ari duen jokalariaren izena gordetzen da
 	public void setIzena(String izena){
 		this.izena=izena;
 	}
 	
-	public static void main(String[] args) {
-		 Tableroa.getTableroa().tableroaSortu(10, 7, 1, 1);
+	
+	//#####################################################################################
+	//setIzena metodoaren probak egiteko beharrezkoa soilik
+	//Partida jokatzen ari duen jokalariaren izena lortu
+	public String getIzena(){
+		return this.izena;
 	}
+	
 
 }

@@ -9,7 +9,6 @@ import org.junit.Test;
 import packEstruktura.Bandera;
 import packEstruktura.Egoera;
 import packEstruktura.Galdera;
-import packEstruktura.Gelaxka;
 import packEstruktura.Hutsa;
 import packEstruktura.Irekita;
 import packEstruktura.Itxita;
@@ -36,13 +35,13 @@ public class TableroaTest {
 		//Probak galdu atributua begiratuz egingo dira, bata aldatzen bada besteak ere aldatuko direlako.
 		//Gainera partidaGaldu() metodo publikoa jada sortuta dago eta erosoagoa da hori erabiltzea.
 		
-		//#################################
+		//#################################################################################################
 		//Tableroa sortu berri da, Galdu atributua beti FALSE izango da
 		Tableroa.getTableroa().hasieratu();
 		Tableroa.getTableroa().tableroaSortu(10, 7, 1, 1);
 		assertEquals(false, Tableroa.getTableroa().partidaGaldu());
 		
-		//#################################
+		//#################################################################################################
 		//Partida bat nahita galdu, Galdu atributua TRUE izatera aldatzeko
 		//Gelaxka guztiak ikutu
 		for(int i=0; i<7 ; i++){
@@ -52,7 +51,7 @@ public class TableroaTest {
 		}
 		assertEquals(true, Tableroa.getTableroa().partidaGaldu());
 		
-		//#################################
+		//#################################################################################################
 		//Hasieratzean Galdu atributua FALSE izan behar da
 		Tableroa.getTableroa().hasieratu();
 		assertEquals(false, Tableroa.getTableroa().partidaGaldu());
@@ -64,7 +63,7 @@ public class TableroaTest {
 	public void testTableroaSortu() {
 		//Konprobatzeko modu bakarra: Auretik tablero bat izanda, tamaina desberdineko tablero bat sortzea
 		
-		//#################################
+		//#################################################################################################
 		//1
 		Tableroa.getTableroa().hasieratu();
 		Tableroa.getTableroa().ezkerrekoClick(10, 7, 0, 0);
@@ -72,7 +71,7 @@ public class TableroaTest {
 		assertEquals(10,Tableroa.getTableroa().getj());
 		assertEquals(10,Tableroa.getTableroa().getMinak());
 		
-		//#################################
+		//#################################################################################################
 		//2
 		Tableroa.getTableroa().hasieratu();
 		Tableroa.getTableroa().ezkerrekoClick(15, 10, 0, 0);
@@ -80,7 +79,7 @@ public class TableroaTest {
 		assertEquals(15,Tableroa.getTableroa().getj());
 		assertEquals(30,Tableroa.getTableroa().getMinak());
 		
-		//#################################
+		//#################################################################################################
 		//3
 		Tableroa.getTableroa().hasieratu();
 		Tableroa.getTableroa().ezkerrekoClick(25, 12, 0, 0);
@@ -92,7 +91,7 @@ public class TableroaTest {
 
 	@Test
 	public void testEskuinekoClick() {
-		//#################################
+		//#################################################################################################
 		//Lehenengo klik-a ez da egin, kontagailua ez da aldatzen
 		Tableroa.getTableroa().hasieratu();
 		Egoera e = Tableroa.getTableroa().balioa(0, 0).getEgoera();
@@ -101,7 +100,7 @@ public class TableroaTest {
 		assertEquals(10,Tableroa.getTableroa().getMinak());
 		
 		
-		//#################################
+		//#################################################################################################
 		//Partida hasi da, bandera jar daiteke, kontagailua alda daiteke
 		Tableroa.getTableroa().hasieratu();
 		Tableroa.getTableroa().ezkerrekoClick(10, 7, 1, 1);
@@ -118,7 +117,7 @@ public class TableroaTest {
 		}
 		
 		
-		//#################################
+		//#################################################################################################
 		//Gelaxka itxita dago, bandera jarri, mina kontagailua -1
 		Tableroa.getTableroa().hasieratu();
 		Tableroa.getTableroa().ezkerrekoClick(10, 7, 1, 1);
@@ -147,28 +146,28 @@ public class TableroaTest {
 		assertEquals(9,Tableroa.getTableroa().getMinak());
 	
 		
-		//#################################
+		//#################################################################################################
 		//Gelaxkak bandera dauka, galdera jarri, mina kontagailua +1
 		Tableroa.getTableroa().eskuinekoClick(i, j);
 		assertTrue(Tableroa.getTableroa().balioa(i, j).getEgoera() instanceof Galdera);
 		assertEquals(10,Tableroa.getTableroa().getMinak());
 		
 		
-		//#################################
+		//#################################################################################################
 		//Gelaxkak galdera dauka, itxi, kontagailua ez da aldatzen
 		Tableroa.getTableroa().eskuinekoClick(i, j);
 		assertTrue(Tableroa.getTableroa().balioa(i, j).getEgoera() instanceof Itxita);
 		assertEquals(10,Tableroa.getTableroa().getMinak());
 		
 		
-		//#################################
+		//#################################################################################################
 		//Irekita dago, ezer ez egin, kontagailua ez da aldatzen
 		Tableroa.getTableroa().eskuinekoClick(1, 1);
 		assertTrue(Tableroa.getTableroa().balioa(1, 1).getEgoera() instanceof Irekita);
 		assertEquals(10,Tableroa.getTableroa().getMinak());
 		
 		
-		//#################################
+		//#################################################################################################
 		//Bandera kopuru maximoa jarri da, ezin da banderarik/galderarik jarri, kontagailua ez da aldatzen
 		for(i=0; i<7 ; i++){
 			for(j=0; j<10; j++){
@@ -199,7 +198,7 @@ public class TableroaTest {
 		assertEquals(0,Tableroa.getTableroa().getMinak());
 		
 		
-		//#################################
+		//#################################################################################################
 		//Partida irabazi da, ez da aldaketarik egongo
 		Tableroa.getTableroa().hasieratu();
 		Tableroa.getTableroa().tableroaSortu(10, 7, 1, 1);
@@ -218,7 +217,7 @@ public class TableroaTest {
 		assertEquals(kont, Tableroa.getTableroa().getMinak());
 		
 		
-		//#################################
+		//#################################################################################################
 		//Partida galdu da, ez da aldaketarik egongo
 		Tableroa.getTableroa().hasieratu();
 		Tableroa.getTableroa().tableroaSortu(10, 7, 1, 1);
@@ -237,7 +236,7 @@ public class TableroaTest {
 	
 	@Test
 	public void testEzkerrekoClick() {
-		//#################################
+		//#################################################################################################
 		//Partidako lehenengo klika (tableroa sortu dela begiratu)
 		Tableroa.getTableroa().hasieratu();
 		Tableroa.getTableroa().ezkerrekoClick(15, 10, 0, 0);
@@ -249,7 +248,7 @@ public class TableroaTest {
 		assertEquals(10,Tableroa.getTableroa().getMinak());
 		
 		
-		//#################################
+		//#################################################################################################
 		//Gelaxka itxita dago, zenbakia da
 		Tableroa.getTableroa().hasieratu();
 		Tableroa.getTableroa().ezkerrekoClick(10, 7, 1, 1);
@@ -277,7 +276,7 @@ public class TableroaTest {
 		assertTrue(Tableroa.getTableroa().balioa(i, j).getEgoera() instanceof Irekita);
 		
 		
-		//#################################
+		//#################################################################################################
 		//Gelaxka itxita dago, hutsa da (ez dago banderarik inguruan)
 		Tableroa.getTableroa().hasieratu();
 		Tableroa.getTableroa().tableroaSortu(10, 7, 1, 1);
@@ -330,7 +329,7 @@ public class TableroaTest {
 		}
 		
 		
-		//#################################
+		//#################################################################################################
 		//Gelaxka itxita dago, hutsa da, inguruan galdera ikurrak daude
 		Tableroa.getTableroa().hasieratu();
 		Tableroa.getTableroa().tableroaSortu(10, 7, 1, 1);
@@ -418,7 +417,7 @@ public class TableroaTest {
 		}
 		
 		
-		//#################################
+		//#################################################################################################
 		//Gelaxka itxita dago, hutsa da, inguruan banderak daude
 		Tableroa.getTableroa().hasieratu();
 		Tableroa.getTableroa().ezkerrekoClick(10, 7, 1, 1);
@@ -477,7 +476,7 @@ public class TableroaTest {
 			Egoera e6 = null;
 			Egoera e7 = null;
 			Egoera e8 = null;
-			Egoera e = Tableroa.getTableroa().balioa(i, j).getEgoera();
+
 			if(i-1 >= 0 && j-1 >= 0 && i-1 < Tableroa.getTableroa().geti() && j-1 < Tableroa.getTableroa().getj()){//Tablero barruan badago
 				e1 = Tableroa.getTableroa().balioa(i-1, j-1).getEgoera();
 			}
@@ -538,7 +537,7 @@ public class TableroaTest {
 		
 		
 		
-		//#################################
+		//#################################################################################################
 		//Gelaxka itxita dago, mina da
 		Tableroa.getTableroa().hasieratu();
 		Tableroa.getTableroa().ezkerrekoClick(10, 7, 1, 1);
@@ -566,7 +565,7 @@ public class TableroaTest {
 		assertEquals(true, Tableroa.getTableroa().partidaGaldu());
 		
 		
-		//#################################
+		//#################################################################################################
 		//Gelaxka irekita dago, zenbakia da, inguruko bandera kopurua ez da nahikoa
 		Tableroa.getTableroa().hasieratu();
 		Tableroa.getTableroa().ezkerrekoClick(10, 7, 1, 1);
@@ -655,7 +654,7 @@ public class TableroaTest {
 		}
 		
 		
-		//#################################
+		//#################################################################################################
 		//Gelaxka irekita dago, zenbakia da, inguruko bandera kopurua nahikoa da
 		Tableroa.getTableroa().hasieratu();
 		Tableroa.getTableroa().ezkerrekoClick(10, 7, 1, 1);
@@ -827,7 +826,7 @@ public class TableroaTest {
 		}
 		
 		
-		//#################################
+		//#################################################################################################
 		//Gelaxka irekita dago, zenbakia da, inguruko bandera kopurua nahikoa da, ondo jarri dira
 		Tableroa.getTableroa().hasieratu();
 		Tableroa.getTableroa().ezkerrekoClick(10, 7, 1, 1);
@@ -1000,7 +999,7 @@ public class TableroaTest {
 		assertEquals(false, Tableroa.getTableroa().partidaGaldu());
 		
 		
-		//#################################
+		//#################################################################################################
 		//Gelaxka irekita dago, zenbakia da, inguruko bandera kopurua nahikoa da, txarto jarri dira
 		Tableroa.getTableroa().hasieratu();
 		Tableroa.getTableroa().ezkerrekoClick(10, 7, 1, 1);
@@ -1275,8 +1274,7 @@ public class TableroaTest {
 		}
 		
 		
-		
-		//#################################
+		//#################################################################################################
 		//Gelaxka irekita dago, zenbakia da, inguruko bandera kopurua nahikoa da, ondo jarri dira, galderak ere daude
 		Tableroa.getTableroa().hasieratu();
 		Tableroa.getTableroa().ezkerrekoClick(10, 7, 1, 1);
@@ -1499,7 +1497,7 @@ public class TableroaTest {
 		assertEquals(false, Tableroa.getTableroa().partidaGaldu());
 		
 		
-		//#################################
+		//#################################################################################################
 		//Gelaxka irekita dago, zenbakia da, inguruko bandera kopurua nahikoa da, txarto jarri dira, galderak daude
 		Tableroa.getTableroa().hasieratu();
 		Tableroa.getTableroa().ezkerrekoClick(10, 7, 1, 1);
@@ -1824,7 +1822,7 @@ public class TableroaTest {
 		}
 		
 		
-		//#################################
+		//#################################################################################################
 		//Gelaxkak bandera dauka
 		Tableroa.getTableroa().hasieratu();
 		Tableroa.getTableroa().ezkerrekoClick(10, 7, 1, 1);
@@ -1853,7 +1851,7 @@ public class TableroaTest {
 		assertTrue(Tableroa.getTableroa().balioa(i, j).getEgoera() instanceof Bandera);
 		
 		
-		//#################################
+		//#################################################################################################
 		//Gelaxkak galdera ikurra dauka 
 		Tableroa.getTableroa().hasieratu();
 		Tableroa.getTableroa().ezkerrekoClick(10, 7, 1, 1);
@@ -1883,7 +1881,7 @@ public class TableroaTest {
 		assertTrue(Tableroa.getTableroa().balioa(i, j).getEgoera() instanceof Irekita);
 		
 		
-		//#################################
+		//#################################################################################################
 		//Gelaxkak galdera ikurra dauka, mina da
 		Tableroa.getTableroa().hasieratu();
 		Tableroa.getTableroa().ezkerrekoClick(10, 7, 1, 1);
@@ -1914,7 +1912,7 @@ public class TableroaTest {
 		assertEquals(true, Tableroa.getTableroa().partidaGaldu());
 		
 		
-		//#################################
+		//#################################################################################################
 		//Gelaxkak galdera ikurra dauka, Zenbakia da
 		Tableroa.getTableroa().hasieratu();
 		Tableroa.getTableroa().ezkerrekoClick(10, 7, 1, 1);
@@ -1945,7 +1943,7 @@ public class TableroaTest {
 		assertEquals(false, Tableroa.getTableroa().partidaGaldu());
 		
 		
-		//#################################
+		//#################################################################################################
 		//Gelaxkak galdera ikurra dauka, Hutsa da
 		Tableroa.getTableroa().hasieratu();
 		Tableroa.getTableroa().tableroaSortu(10, 7, 1, 1);
@@ -2002,7 +2000,7 @@ public class TableroaTest {
 		}
 		
 		
-		//#################################
+		//#################################################################################################
 		//Partida irabazi da, ez da aldaketarik egongo
 		Tableroa.getTableroa().hasieratu();
 		Tableroa.getTableroa().tableroaSortu(10, 7, 1, 1);
@@ -2019,7 +2017,7 @@ public class TableroaTest {
 		assertEquals(e, Tableroa.getTableroa().balioa(0, 0).getEgoera());
 			
 		
-		//#################################
+		//#################################################################################################
 		//Partida galdu da, ez da aldaketarik egongo
 		Tableroa.getTableroa().hasieratu();
 		Tableroa.getTableroa().tableroaSortu(10, 7, 1, 1);
@@ -2038,25 +2036,25 @@ public class TableroaTest {
 	@Test
 	public void testGetMinak() {
 		//Tableroa sortzean hiru aukera posible
-		//#################################
+		//#################################################################################################
 		//10 mina
 		Tableroa.getTableroa().hasieratu();
 		Tableroa.getTableroa().tableroaSortu(10, 7, 1, 1);
 		assertEquals(10, Tableroa.getTableroa().getMinak());
 		
-		//#################################
+		//#################################################################################################
 		//30 mina
 		Tableroa.getTableroa().hasieratu();
 		Tableroa.getTableroa().tableroaSortu(15, 10, 1, 1);
 		assertEquals(30, Tableroa.getTableroa().getMinak());
 		
-		//#################################
+		//#################################################################################################
 		//75 mina
 		Tableroa.getTableroa().hasieratu();
 		Tableroa.getTableroa().tableroaSortu(25, 12, 1, 1);
 		assertEquals(75, Tableroa.getTableroa().getMinak());
 		
-		//#################################
+		//#################################################################################################
 		//Partida hasita dagoela bandera bat jarri
 		//Zailtasun errazarekin egingo da, baina hirurekin berdin funtzionatu beharko luke
 		Tableroa.getTableroa().hasieratu();
@@ -2073,7 +2071,7 @@ public class TableroaTest {
 		}
 		
 		
-		//#################################
+		//#################################################################################################
 		//Partida hasita dagoela gelaxka guztietan bandera bat jartzen saiatu
 		//Zailtasun errazarekin egingo da, baina hirurekin berdin funtzionatu beharko luke
 		Tableroa.getTableroa().hasieratu();
@@ -2086,7 +2084,7 @@ public class TableroaTest {
 		}
 		assertEquals(0, Tableroa.getTableroa().getMinak());
 		
-		//#################################
+		//#################################################################################################
 		//Partida hasita dagoela bandera bat jarri eta kendu
 		//Zailtasun errazarekin egingo da, baina hirurekin berdin funtzionatu beharko luke
 		Tableroa.getTableroa().hasieratu();
@@ -2109,7 +2107,7 @@ public class TableroaTest {
 		int i = 0; 
 		int j = 0;
 		
-		//#################################
+		//#################################################################################################
 		//Gelaxka Huts bat lortu
 		while(!aurkitua && i < 7){
 			j=0;
@@ -2124,7 +2122,7 @@ public class TableroaTest {
 		}
 		assertEquals(true, aurkitua);
 		
-		//#################################
+		//#################################################################################################
 		//Gelaxka Zenbakidun bat lortu
 		aurkitua = false;
 		i = 0; 
@@ -2142,7 +2140,7 @@ public class TableroaTest {
 		}
 		assertEquals(true, aurkitua);
 		
-		//#################################
+		//#################################################################################################
 		//Minadun gelaxka bat lortu 
 		i = 0; 
 		j = 0;
@@ -2166,19 +2164,19 @@ public class TableroaTest {
 	public void testGeti() {
 		//Hiru tamaina desberdinetako tableroekin egingo dira probak
 		
-		//#################################
+		//#################################################################################################
 		//Zailtasuna:1
 		Tableroa.getTableroa().hasieratu();
 		Tableroa.getTableroa().tableroaSortu(10, 7, 1, 1);
 		assertEquals(7, Tableroa.getTableroa().geti());
 		
-		//#################################
+		//#################################################################################################
 		//Zailtasuna:2
 		Tableroa.getTableroa().hasieratu();
 		Tableroa.getTableroa().tableroaSortu(15, 10, 1, 1);
 		assertEquals(10, Tableroa.getTableroa().geti());
 		
-		//#################################
+		//#################################################################################################
 		//Zailtasuna:3
 		Tableroa.getTableroa().hasieratu();
 		Tableroa.getTableroa().tableroaSortu(25, 12, 1, 1);
@@ -2191,19 +2189,19 @@ public class TableroaTest {
 	public void testGetj() {
 		//Hiru tamaina desberdinetako tableroekin egingo dira probak
 		
-		//#################################
+		//#################################################################################################
 		//Zailtasuna:1
 		Tableroa.getTableroa().hasieratu();
 		Tableroa.getTableroa().tableroaSortu(10, 7, 1, 1);
 		assertEquals(10, Tableroa.getTableroa().getj());
 			
-		//#################################
+		//#################################################################################################
 		//Zailtasuna:2
 		Tableroa.getTableroa().hasieratu();
 		Tableroa.getTableroa().tableroaSortu(15, 10, 1, 1);
 		assertEquals(15, Tableroa.getTableroa().getj());
 		
-		//#################################
+		//#################################################################################################
 		//Zailtasuna:3
 		Tableroa.getTableroa().hasieratu();
 		Tableroa.getTableroa().tableroaSortu(25, 12, 1, 1);
@@ -2214,7 +2212,7 @@ public class TableroaTest {
 	
 	@Test
 	public void testPartidaGaldu() {
-		//#################################
+		//#################################################################################################
 		//Tableroa sortu berri da, Galdu atributua beti FALSE izango da
 		Tableroa.getTableroa().hasieratu();
 		Tableroa.getTableroa().tableroaSortu(10, 7, 1, 1);
@@ -2229,12 +2227,12 @@ public class TableroaTest {
 		}
 		assertEquals(true, Tableroa.getTableroa().partidaGaldu());
 		
-		//#################################
+		//#################################################################################################
 		//Hasieratzean Galdu atributua FALSE izan behar da
 		Tableroa.getTableroa().hasieratu();
 		assertEquals(false, Tableroa.getTableroa().partidaGaldu());
 		
-		//#################################
+		//#################################################################################################
 		//Partida bat irabazi
 		Tableroa.getTableroa().hasieratu();
 		Tableroa.getTableroa().tableroaSortu(10, 7, 1, 1);
@@ -2249,17 +2247,50 @@ public class TableroaTest {
 		assertEquals(false, Tableroa.getTableroa().partidaGaldu());
 		
 	}
+	
+	@Test
+	public void testPartidaIrabazi() {
+		//#################################################################################################
+		//Tableroa sortu berri da, partida ez da hasi
+		Tableroa.getTableroa().hasieratu();
+		Tableroa.getTableroa().tableroaSortu(10, 7, 1, 1);
+		assertEquals(false, Tableroa.getTableroa().partidaIrabazi());
+		
+		//#################################################################################################
+		//Partida bat irabazi, mina ez duten gelaxka guztiak ireki dira
+		//Gelaxka guztiak ikutu
+		for(int i=0; i<7 ; i++){
+			for(int j=0; j<10; j++){
+				if(!(Tableroa.getTableroa().balioa(i, j) instanceof Mina)){
+					Tableroa.getTableroa().ezkerrekoClick(10, 7, i, j);
+				}
+			}
+		}
+		assertEquals(true, Tableroa.getTableroa().partidaIrabazi());
+		
+		//#################################################################################################
+		//Partida nahita galdu
+		Tableroa.getTableroa().hasieratu();
+		//Gelaxka guztiak ikutu
+		for(int i=0; i<7 ; i++){
+			for(int j=0; j<10; j++){
+				Tableroa.getTableroa().ezkerrekoClick(10, 7, i, j);
+			}
+		}
+		assertEquals(false, Tableroa.getTableroa().partidaIrabazi());
+		
+	}
 
 	
 	@Test
 	public void testSetIzena() {
-		//#################################
+		//#################################################################################################
 		//Izen bat sartu
 		Tableroa.getTableroa().hasieratu();
 		Tableroa.getTableroa().setIzena("Josu");
 		assertEquals("Josu", Tableroa.getTableroa().getIzena());
 		
-		//#################################
+		//#################################################################################################
 		//Aurreko izen bat aldatu
 		Tableroa.getTableroa().setIzena("Irakasle");
 		assertEquals("Irakasle", Tableroa.getTableroa().getIzena());
@@ -2269,18 +2300,18 @@ public class TableroaTest {
 	
 	@Test
 	public void testGetIzena() {
-		//#################################
+		//#################################################################################################
 		//Izenik ez da sartu
 		Tableroa.getTableroa().hasieratu();
 		Tableroa.getTableroa().tableroaSortu(10, 7, 1, 1);
-		assertNull(Tableroa.getTableroa().getIzena());
+		assertEquals(null, Tableroa.getTableroa().getIzena());
 				
-		//#################################
+		//#################################################################################################
 		//Izen bat sartu da
 		Tableroa.getTableroa().setIzena("Josu");
-		assertEquals("Josu", Tableroa.getTableroa().getIzena()); 
+		assertEquals("Josu", Tableroa.getTableroa().getIzena());
 			
-		//#################################
+		//#################################################################################################
 		//Aurreko izena aldatu da
 		Tableroa.getTableroa().setIzena("Irakasle");
 		assertEquals("Irakasle", Tableroa.getTableroa().getIzena());
